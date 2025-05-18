@@ -1,0 +1,11 @@
+First create project
+
+add tailwindcss
+
+add background in my app using bg.ibelick.com
+
+add icons using google icon and lordicons(animated icons)
+
+add toaster using react toastify to alert 
+
+install uuid for unique id to edit and delete data
