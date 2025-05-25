@@ -10,18 +10,6 @@ const Navbar = () => {
             <span></span>
           </a>
         </div>
-        <div>
-          <button className="flex justify-center items-center gap-1 border hover:bg-gray-600 border-gray-700 px-2 rounded-full py-1">
-            <lord-icon
-            className="size-5 sm:size-6"              
-            src="https://cdn.lordicon.com/jjxzcivr.json"
-              trigger="hover"
-              stroke="bold"
-              colors="primary:#000000,secondary:#000000"
-            ></lord-icon>
-            <span className="text-sm sm:text-[15px]">Github</span>
-          </button>
-        </div>
       </div>
     </nav>
   );
