@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
+import CustomConfirm from './CustomConfirm';
 
 export default function Manager() {
   const [isVisible, setisVisible] = useState(false);
   const [formPassword, setformPassword] = useState([]);
   const [viewPassword, setviewPassword] = useState({});
   const [copy, setcopy] = useState({ index: null, field: null });
+  const [confirmDialog, setConfirmDialog] = useState({
+  visible: false,
+  id: null,
+});
+
+
+
   const [form, setform] = useState({
     site: "",
     username: "",
@@ -54,18 +62,20 @@ export default function Manager() {
     setform(formPassword.filter((i) => i.id === id)[0]);
     setformPassword(formPassword.filter((i) => i.id != id));
   };
-  const deleteData = (id) => {
-    let c = confirm("Are you sure You want to delete contact")
-    if(c)
-    {
-      setformPassword(formPassword.filter((item) => item.id != id));
-    localStorage.setItem(
-      "password",
-      JSON.stringify(formPassword.filter((item) => item.id != id))
-    );
-     toast("Deleted successfully  ✅");
-    }    
-  };
+  
+ const requestDelete = (id) => {
+  setConfirmDialog({ visible: true, id });
+};
+
+const confirmDelete = () => {
+  const { id } = confirmDialog;
+  const newPasswords = formPassword.filter((item) => item.id !== id);
+  setformPassword(newPasswords);
+  localStorage.setItem("password", JSON.stringify(newPasswords));
+  toast("Deleted successfully ✅");
+  setConfirmDialog({ visible: false, id: null });
+};
+
   const viewPasswordSet = (id) => {
      setviewPassword((prev) => ({
     ...prev,
@@ -74,6 +84,15 @@ export default function Manager() {
   };
   return (
     <>
+  {confirmDialog.visible && (
+  <CustomConfirm
+    message="Are you sure you want to delete this password?"
+    onConfirm={confirmDelete}
+    onCancel={() => setConfirmDialog({ visible: false, id: null })}
+  />
+)}
+
+
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -232,7 +251,7 @@ export default function Manager() {
                           <div className="flex items-center justify-between">
                             <span className="max-w-[60%] truncate">
                               <span>
-                                {item.password === "" ? "No password" : viewPassword[item.id] ? item.password : "*********"}
+                                {item.password === "" ? "No password" : viewPassword[item.id] ? item.password : "*".repeat(item.password.length)}
                               </span>
                             </span>
                             {item.password === "" ? "": <div className="flex gap-2 items-center">
@@ -297,14 +316,13 @@ export default function Manager() {
                               ></lord-icon>
                             </span>
                             <span>
-                              <lord-icon
-                                onclick={() => {
-                                  deleteData(item.id);
-                                }}
-                                className="size-5 hover:cursor-pointer"
-                                src="https://cdn.lordicon.com/xyfswyxf.json"
-                                trigger="hover"
-                              ></lord-icon>
+                            <lord-icon
+  onClick={() => requestDelete(item.id)}
+  className="size-5 hover:cursor-pointer"
+  src="https://cdn.lordicon.com/xyfswyxf.json"
+  trigger="hover"
+/>
+
                             </span>
                           </div>
                         </td>
