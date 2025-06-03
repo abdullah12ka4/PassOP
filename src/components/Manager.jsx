@@ -164,7 +164,8 @@ export default function Manager() {
           <div className="w-full overflow-auto">
             {formPassword.length === 0 && <div>No password to show</div>}
             {formPassword.length != 0 && (
-              <table className="w-full table-fixed">
+             <div className="max-h-[30vh] overflow-auto">
+               <table className="w-full table-fixed">
                 <thead className=" bg-green-500">
                   <tr>
                     <th className="w-[200px] sm:w-1/2 px-4 py-2 text-left">Website</th>
@@ -312,6 +313,7 @@ export default function Manager() {
                   })}
                 </tbody>
               </table>
+             </div>
             )}
           </div>
         </div>
