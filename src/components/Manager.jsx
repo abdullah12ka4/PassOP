@@ -31,7 +31,7 @@ export default function Manager() {
   };
   const handleSubmit = () => {
     if (form.site === "" && form.username === "" && form.password === "") {
-      alert("Add data first");
+      toast("Add field first")
     } else {
       let newPasswordList = [...formPassword, { ...form, id: uuidv4() }];
       setformPassword(newPasswordList);
@@ -178,15 +178,15 @@ export default function Manager() {
                     return (
                       <tr key={index}>
                         <td className="border border-gray-300 truncate px-3 py-2 flex items-center relative">
-                          <a
+                         {item.site === "" ? "No link add":  <a
                             className="text-blue-500 hover:underline max-w-[90%] truncate"
                             href={item.site}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
                             {item.site}
-                          </a>
-                          <span className="absolute right-3">
+                          </a>}
+                          {item.site === "" ? "" : <span className="absolute right-3">
                             <img
                               className="size-4 hover:cursor-pointer"
                               onClick={() => {
@@ -199,10 +199,10 @@ export default function Manager() {
                               }
                               alt="copy image"
                             />
-                          </span>
+                          </span>}
                         </td>
                         <td className="border border-gray-300 truncate px-3 py-2">
-                          <div className="flex items-center justify-between">
+                         {item.username === "" ? "No username" :  <div className="flex items-center justify-between">
                             <span className="max-w-[90%] truncate">
                               {item.username}
                             </span>
@@ -225,16 +225,16 @@ export default function Manager() {
                                 alt="copy-image"
                               />
                             </span>
-                          </div>
+                          </div>}
                         </td>
                         <td className="border border-gray-300 truncate px-3 py-2">
                           <div className="flex items-center justify-between">
                             <span className="max-w-[60%] truncate">
                               <span>
-                                {viewPassword[item.id] ? item.password : "*********"}
+                                {item.password === "" ? "No password" : viewPassword[item.id] ? item.password : "*********"}
                               </span>
                             </span>
-                            <div className="flex gap-2 items-center">
+                            {item.password === "" ? "": <div className="flex gap-2 items-center">
                               <button
                                 onClick={() => {
                                   viewPasswordSet(item.id);
@@ -277,7 +277,8 @@ export default function Manager() {
                                   alt="copy-image"
                                 />
                               </span>
-                            </div>
+                            </div>}
+                            
                           </div>
                         </td>
                         <td className="w-fit border border-gray-300 truncate px-3 py-2">
