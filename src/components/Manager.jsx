@@ -129,7 +129,7 @@ export default function Manager() {
                 value={form.password}
                 onChange={handleChange}
               />
-              <button
+             {form.password === "" ? "":  <button
                 onClick={() => {
                   setisVisible(!isVisible);
                 }}
@@ -143,7 +143,7 @@ export default function Manager() {
                     <img src="show.svg" alt="" />
                   </span>
                 )}
-              </button>
+              </button>}
             </div>
           </div>
           <button
